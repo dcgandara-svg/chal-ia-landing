@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chal-IA — Tu WhatsApp contesta solo, 24/7</title>
+<meta name="description" content="Asistente con inteligencia artificial que atiende el WhatsApp de tu negocio: responde dudas, cotiza y agenda mientras tú te dedicas a lo importante.">
+<link rel="icon" type="image/png" href="logo.png">
+<meta property="og:title" content="Chal-IA — Tu WhatsApp contesta solo, 24/7">
+<meta property="og:description" content="Deja de perder ventas por no contestar a tiempo. Tu asistente responde al instante, de día y de noche.">
+<meta property="og:image" content="https://chal-ia.com/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosque:#0D572F;
+  --bosque-osc:#083D21;
+  --salvia:#A8B894;
+  --salvia-suave:#E4EADC;
+  --hueso:#F7F5F0;
+  --papel:#FFFFFF;
+  --tinta:#1C1F1D;
+  --tinta-suave:#5A625C;
+  --wa:#25D366;
+  --radio:14px;
+  --sombra:0 8px 30px rgba(13,87,47,.10);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--hueso);
+  color:var(--tinta);
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+.contenedor{width:min(1100px,92%);margin:0 auto}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(247,245,240,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(13,87,47,.08);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0}
+.marca{display:flex;align-items:center;gap:.6rem}
+.marca img{height:34px;width:auto}
+.marca span{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;letter-spacing:.02em;color:var(--bosque)}
+.marca span em{font-style:normal;color:var(--salvia)}
+.btn-nav{
+  background:var(--bosque);color:#fff;
+  font-weight:500;font-size:.9rem;
+  padding:.55rem 1.1rem;border-radius:999px;
+  transition:background .2s;
+}
+.btn-nav:hover{background:var(--bosque-osc)}
+.nav-acciones{display:flex;align-items:center;gap:.6rem}
+.btn-login{
+  font-weight:500;font-size:.9rem;
+  padding:.55rem 1rem;border-radius:999px;
+  color:var(--bosque);border:1.5px solid var(--salvia);
+  transition:background .2s;
+}
+.btn-login:hover{background:var(--salvia-suave)}
+@media(max-width:520px){
+  .btn-login{padding:.5rem .8rem;font-size:.82rem}
+  .btn-nav{padding:.5rem .8rem;font-size:.82rem}
+  .nav-acciones{gap:.4rem}
+}
+
+/* ---------- HERO ---------- */
+.hero{padding:3.5rem 0 4.5rem;position:relative}
+.hero-grid{display:grid;gap:2.5rem;align-items:center}
+@media(min-width:880px){.hero-grid{grid-template-columns:1.1fr .9fr;gap:3rem}}
+.etiqueta{
+  display:inline-block;
+  background:var(--salvia-suave);color:var(--bosque);
+  font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:999px;margin-bottom:1.2rem;
+}
+.hero h1{
+  font-size:clamp(2rem,5.5vw,3.3rem);
+  font-weight:700;color:var(--tinta);
+  margin-bottom:1.1rem;
+}
+.hero h1 .resalta{color:var(--bosque)}
+.hero p.sub{
+  font-size:clamp(1.02rem,2.4vw,1.2rem);
+  color:var(--tinta-suave);
+  max-width:32rem;
+  margin-bottom:1.8rem;
+}
+.cta-fila{display:flex;flex-wrap:wrap;gap:.8rem;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-weight:600;font-size:1rem;
+  padding:.85rem 1.5rem;border-radius:999px;
+  transition:transform .15s,box-shadow .2s,background .2s;
+}
+.btn:active{transform:scale(.97)}
+.btn-wa{background:var(--bosque);color:#fff;box-shadow:var(--sombra)}
+.btn-wa:hover{background:var(--bosque-osc);box-shadow:0 10px 34px rgba(13,87,47,.22)}
+.btn-fantasma{color:var(--bosque);border:1.5px solid var(--salvia)}
+.btn-fantasma:hover{background:var(--salvia-suave)}
+.mini-nota{font-size:.85rem;color:var(--tinta-suave);margin-top:.9rem}
+
+/* ---------- TELÉFONO / CHAT ---------- */
+.telefono{
+  background:var(--papel);
+  border-radius:26px;
+  box-shadow:0 18px 50px rgba(13,87,47,.16);
+  overflow:hidden;
+  max-width:370px;margin:0 auto;width:100%;
+  border:1px solid rgba(13,87,47,.07);
+}
+.chat-cabecera{
+  background:var(--bosque);color:#fff;
+  display:flex;align-items:center;gap:.7rem;
+  padding:.85rem 1rem;
+}
+.chat-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--salvia-suave);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;
+}
+.chat-avatar img{width:26px;height:auto}
+.chat-cabecera .nombre{font-weight:600;font-size:.95rem;line-height:1.2}
+.chat-cabecera .estado{font-size:.72rem;opacity:.85}
+.chat-cuerpo{
+  background:#EDEAE2;
+  padding:1rem .9rem 1.2rem;
+  display:flex;flex-direction:column;gap:.55rem;
+  min-height:330px;
+}
+.burbuja{
+  max-width:82%;
+  padding:.55rem .8rem .8rem;
+  border-radius:10px;
+  font-size:.88rem;line-height:1.45;
+  position:relative;
+  box-shadow:0 1px 1px rgba(0,0,0,.06);
+  opacity:0;transform:translateY(8px);
+  animation:aparece .45s ease forwards;
+}
+.burbuja .hora{
+  position:absolute;bottom:3px;right:9px;
+  font-size:.62rem;color:rgba(0,0,0,.4);
+}
+.cliente{background:#fff;align-self:flex-start;border-top-left-radius:2px}
+.bot{background:#DCF3D0;align-self:flex-end;border-top-right-radius:2px}
+.burbuja:nth-child(1){animation-delay:.3s}
+.burbuja:nth-child(2){animation-delay:1.1s}
+.burbuja:nth-child(3){animation-delay:2s}
+.burbuja:nth-child(4){animation-delay:2.9s}
+.burbuja:nth-child(5){animation-delay:3.8s}
+@keyframes aparece{to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){
+  .burbuja{animation:none;opacity:1;transform:none}
+}
+
+/* ---------- PLIEGUE DIVISOR ---------- */
+.pliegue{height:70px;position:relative;overflow:hidden}
+.pliegue svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* ---------- SECCIONES ---------- */
+section{padding:4rem 0}
+.encabezado-seccion{max-width:38rem;margin-bottom:2.6rem}
+.encabezado-seccion h2{font-size:clamp(1.6rem,4vw,2.3rem);font-weight:700;color:var(--tinta);margin-bottom:.7rem}
+.encabezado-seccion h2 .resalta{color:var(--bosque)}
+.encabezado-seccion p{color:var(--tinta-suave);font-size:1.05rem}
+
+/* Cómo funciona */
+.oscura{background:var(--bosque);color:#fff}
+.oscura .encabezado-seccion h2{color:#fff}
+.oscura .encabezado-seccion p{color:rgba(255,255,255,.75)}
+.pasos{display:grid;gap:1.2rem}
+@media(min-width:760px){.pasos{grid-template-columns:repeat(3,1fr)}}
+.paso{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radio);
+  padding:1.6rem 1.4rem;
+  position:relative;
+}
+.paso .num{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:.85rem;font-weight:600;letter-spacing:.08em;
+  color:var(--salvia);margin-bottom:.8rem;display:block;
+}
+.paso h3{font-size:1.15rem;margin-bottom:.5rem}
+.paso p{font-size:.95rem;color:rgba(255,255,255,.78)}
+
+/* Beneficios: tarjetas con esquina doblada */
+.beneficios{display:grid;gap:1.2rem}
+@media(min-width:700px){.beneficios{grid-template-columns:repeat(2,1fr)}}
+.tarjeta{
+  background:var(--papel);
+  border-radius:var(--radio);
+  padding:1.7rem 1.5rem;
+  position:relative;
+  box-shadow:var(--sombra);
+  overflow:hidden;
+}
+.tarjeta::after{ /* esquina doblada estilo origami */
+  content:'';position:absolute;top:0;right:0;
+  width:0;height:0;
+  border-top:26px solid var(--salvia);
+  border-left:26px solid transparent;
+  filter:brightness(1.05);
+}
+.tarjeta .icono{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--salvia-suave);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1rem;
+}
+.tarjeta .icono svg{width:24px;height:24px;stroke:var(--bosque)}
+.tarjeta h3{font-size:1.15rem;margin-bottom:.45rem}
+.tarjeta p{color:var(--tinta-suave);font-size:.95rem}
+
+/* Para quién */
+.chips{display:flex;flex-wrap:wrap;gap:.7rem}
+.chip{
+  background:var(--papel);
+  border:1.5px solid var(--salvia);
+  color:var(--bosque);
+  font-weight:500;font-size:.95rem;
+  padding:.55rem 1.15rem;border-radius:999px;
+}
+
+/* ---------- CTA FINAL / FORMULARIO ---------- */
+.cierre{background:var(--salvia-suave)}
+.cierre-grid{display:grid;gap:2.5rem;align-items:start}
+@media(min-width:880px){.cierre-grid{grid-template-columns:1fr 1fr;gap:3.5rem}}
+.cierre h2{font-size:clamp(1.7rem,4vw,2.4rem);color:var(--tinta);margin-bottom:.8rem}
+.cierre h2 .resalta{color:var(--bosque)}
+.cierre p.gancho{color:var(--tinta-suave);font-size:1.05rem;margin-bottom:1.6rem;max-width:28rem}
+.formulario{
+  background:var(--papel);
+  border-radius:var(--radio);
+  padding:1.8rem 1.6rem;
+  box-shadow:var(--sombra);
+}
+.formulario h3{font-size:1.2rem;margin-bottom:1.2rem}
+.campo{margin-bottom:1rem}
+.campo label{display:block;font-size:.85rem;font-weight:600;color:var(--tinta);margin-bottom:.35rem}
+.campo input,.campo select{
+  width:100%;
+  font-family:'Outfit',sans-serif;font-size:1rem;
+  padding:.7rem .9rem;
+  border:1.5px solid #DDD8CE;border-radius:10px;
+  background:var(--hueso);color:var(--tinta);
+  transition:border-color .2s;
+}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--bosque)}
+.btn-enviar{
+  width:100%;border:none;cursor:pointer;
+  background:var(--bosque);color:#fff;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:1.05rem;
+  padding:.9rem;border-radius:999px;
+  transition:background .2s,transform .15s;
+}
+.btn-enviar:hover{background:var(--bosque-osc)}
+.btn-enviar:active{transform:scale(.98)}
+.aviso-form{font-size:.8rem;color:var(--tinta-suave);margin-top:.8rem;text-align:center}
+.exito{
+  display:none;
+  background:var(--salvia-suave);
+  border:1.5px solid var(--salvia);
+  color:var(--bosque);
+  font-weight:500;
+  padding:1rem;border-radius:10px;text-align:center;
+  margin-top:1rem;
+}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--bosque-osc);color:rgba(255,255,255,.8);padding:2.5rem 0}
+.footer-inner{display:flex;flex-wrap:wrap;gap:1.5rem;align-items:center;justify-content:space-between}
+.footer-marca{display:flex;align-items:center;gap:.6rem}
+.footer-marca img{height:30px;filter:brightness(0) invert(1);opacity:.9}
+.footer-marca span{font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff}
+footer a{color:var(--salvia);font-weight:500}
+footer .legal{font-size:.85rem;opacity:.65;width:100%;text-align:center;margin-top:1rem}
+
+/* Botón flotante de WhatsApp */
+.flotante{
+  position:fixed;bottom:1.2rem;right:1.2rem;z-index:60;
+  width:58px;height:58px;border-radius:50%;
+  background:var(--wa);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 24px rgba(37,211,102,.4);
+  transition:transform .2s;
+}
+.flotante:hover{transform:scale(1.08)}
+.flotante svg{width:30px;height:30px;fill:#fff}
+
+/* Reveal on scroll */
+.revela{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.revela.visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.revela{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="contenedor nav-inner">
+    <a class="marca" href="#">
+      <img src="logo.png" alt="Chal-IA">
+      <span>CHAL<em>-IA</em></span>
+    </a>
+    <div class="nav-acciones">
+      <a class="btn-login" href="https://app.chal-ia.com">Iniciar sesión</a>
+      <a class="btn-nav" href="https://wa.me/523333370351?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Chal-IA" target="_blank" rel="noopener">Escríbenos</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="contenedor hero-grid">
+    <div>
+      <span class="etiqueta">Asistente inteligente para WhatsApp</span>
+      <h1>¿Cuántas ventas pierdes por <span class="resalta">no contestar a tiempo</span>?</h1>
+      <p class="sub">Chal-IA atiende el WhatsApp de tu negocio por ti: responde dudas, cotiza y agenda al instante — de día, de noche y en fin de semana. Como tu mejor empleado, pero sin horario.</p>
+      <div class="cta-fila">
+        <a class="btn btn-wa" href="https://wa.me/523333370351?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Chal-IA" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/><path d="M12.05 2a9.9 9.9 0 0 0-8.57 14.87L2 22l5.27-1.38A9.9 9.9 0 1 0 12.05 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 1 1 6.98 3.86z"/></svg>
+          Pruébalo en WhatsApp
+        </a>
+        <a class="btn btn-fantasma" href="#contacto">Quiero más información</a>
+      </div>
+      <p class="mini-nota">Respuesta en minutos · Sin compromiso</p>
+    </div>
+
+    <div class="telefono" aria-label="Ejemplo de conversación atendida por Chal-IA">
+      <div class="chat-cabecera">
+        <div class="chat-avatar"><img src="logo.png" alt=""></div>
+        <div>
+          <div class="nombre">Refaccionaria El Águila</div>
+          <div class="estado">en línea</div>
+        </div>
+      </div>
+      <div class="chat-cuerpo">
+        <div class="burbuja cliente">¿Tienen balatas para Tsuru 2015? <span class="hora">11:47 PM</span></div>
+        <div class="burbuja bot">¡Claro que sí! 🙌 Tenemos balatas delanteras y traseras para Tsuru 2015, originales y genéricas. ¿Cuáles necesitas? <span class="hora">11:47 PM</span></div>
+        <div class="burbuja cliente">Las delanteras. ¿Hasta qué hora abren mañana? <span class="hora">11:48 PM</span></div>
+        <div class="burbuja bot">Mañana abrimos de 9:00 AM a 7:00 PM. Si gustas, te las aparto desde ahorita para que pases por ellas sin hacer fila. ¿A qué nombre las dejo? 📦 <span class="hora">11:48 PM</span></div>
+        <div class="burbuja cliente">A nombre de Carlos, porfa 👍 <span class="hora">11:49 PM</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="pliegue" aria-hidden="true">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><polygon points="0,70 1440,0 1440,70" fill="#0D572F"/><polygon points="0,70 1440,28 1440,70" fill="#083D21" opacity=".55"/></svg>
+</div>
+
+<section class="oscura" id="como">
+  <div class="contenedor">
+    <div class="encabezado-seccion revela">
+      <h2>Así de simple lo ponemos a trabajar</h2>
+      <p>Tú no necesitas saber nada de tecnología. Nosotros nos encargamos de todo.</p>
+    </div>
+    <div class="pasos">
+      <div class="paso revela">
+        <span class="num">PASO 1</span>
+        <h3>Platicamos de tu negocio</h3>
+        <p>Nos cuentas qué vendes, tus precios, horarios y cómo le hablas a tus clientes. Con eso armamos tu asistente a la medida.</p>
+      </div>
+      <div class="paso revela">
+        <span class="num">PASO 2</span>
+        <h3>Lo entrenamos para ti</h3>
+        <p>Tu asistente aprende tus productos, tus respuestas y tu estilo. Responde como parte de tu equipo, no como robot.</p>
+      </div>
+      <div class="paso revela">
+        <span class="num">PASO 3</span>
+        <h3>Se conecta a tu WhatsApp</h3>
+        <p>En menos de una semana está contestando. Y cuando alguien necesita hablar contigo, te avisa de inmediato.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pliegue" aria-hidden="true" style="transform:scaleY(-1)">
+  <svg viewBox="0 0 1440 70" preserveAspectRatio="none"><polygon points="0,70 1440,0 1440,70" fill="#0D572F"/><polygon points="0,70 1440,28 1440,70" fill="#083D21" opacity=".55"/></svg>
+</div>
+
+<section id="beneficios">
+  <div class="contenedor">
+    <div class="encabezado-seccion revela">
+      <h2>Lo que <span class="resalta">gana tu negocio</span></h2>
+      <p>Cada mensaje contestado a tiempo es una venta que no se va con la competencia.</p>
+    </div>
+    <div class="beneficios">
+      <div class="tarjeta revela">
+        <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Responde al instante, 24/7</h3>
+        <p>Noches, domingos y días festivos. Tu negocio nunca deja un mensaje en visto, aunque tú estés descansando.</p>
+      </div>
+      <div class="tarjeta revela">
+        <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h3>Habla como tu negocio</h3>
+        <p>Conoce tus productos, tus precios y tu forma de tratar a la gente. Tus clientes sienten que hablan contigo.</p>
+      </div>
+      <div class="tarjeta revela">
+        <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></div>
+        <h3>Te avisa cuando te necesitan</h3>
+        <p>Si un cliente pide hablar con una persona, recibes el aviso al momento con el resumen de la conversación. Tú retomas, sin perder el hilo.</p>
+      </div>
+      <div class="tarjeta revela">
+        <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
+        <h3>Más ventas con el mismo equipo</h3>
+        <p>Atiende a decenas de clientes a la vez sin contratar a nadie más. Cotiza, agenda y aparta pedidos por ti.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0" id="paraquien">
+  <div class="contenedor">
+    <div class="encabezado-seccion revela">
+      <h2>Hecho para negocios <span class="resalta">como el tuyo</span></h2>
+      <p>Si tus clientes te escriben por WhatsApp, Chal-IA es para ti.</p>
+    </div>
+    <div class="chips revela">
+      <span class="chip">🍽️ Restaurantes</span>
+      <span class="chip">🏥 Clínicas y consultorios</span>
+      <span class="chip">🛍️ Tiendas y boutiques</span>
+      <span class="chip">🔧 Talleres y refaccionarias</span>
+      <span class="chip">💇 Estéticas y spas</span>
+      <span class="chip">📦 Ventas en línea</span>
+      <span class="chip">🏋️ Gimnasios</span>
+      <span class="chip">🏠 Inmobiliarias</span>
+      <span class="chip">✨ Y muchos más</span>
+    </div>
+  </div>
+</section>
+
+<section class="cierre" id="contacto">
+  <div class="contenedor cierre-grid">
+    <div class="revela">
+      <h2>Platícanos de tu negocio y <span class="resalta">te armamos una propuesta a tu medida</span></h2>
+      <p class="gancho">Cada negocio es distinto, y tu asistente también. Cuéntanos qué necesitas y te decimos exactamente cómo funcionaría en tu caso — sin letras chiquitas y sin compromiso.</p>
+      <a class="btn btn-wa" href="https://wa.me/523333370351?text=Hola%2C%20quiero%20una%20propuesta%20para%20mi%20negocio" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/><path d="M12.05 2a9.9 9.9 0 0 0-8.57 14.87L2 22l5.27-1.38A9.9 9.9 0 1 0 12.05 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 1 1 6.98 3.86z"/></svg>
+        Mejor escríbenos directo
+      </a>
+    </div>
+
+    <form class="formulario revela" id="form-contacto" novalidate>
+      <h3>O déjanos tus datos y te contactamos</h3>
+      <div class="campo">
+        <label for="nombre">Tu nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Ej. Carlos Ramírez" required>
+      </div>
+      <div class="campo">
+        <label for="negocio">Tu negocio</label>
+        <input type="text" id="negocio" name="negocio" placeholder="Ej. Refaccionaria El Águila" required>
+      </div>
+      <div class="campo">
+        <label for="whatsapp">Tu WhatsApp</label>
+        <input type="tel" id="whatsapp" name="whatsapp" placeholder="Ej. 33 1234 5678" required>
+      </div>
+      <div class="campo">
+        <label for="giro">¿A qué se dedica?</label>
+        <select id="giro" name="giro">
+          <option>Restaurante / comida</option>
+          <option>Salud (clínica, consultorio)</option>
+          <option>Tienda / ventas</option>
+          <option>Servicios (taller, estética, etc.)</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <button class="btn-enviar" type="submit">Quiero mi propuesta</button>
+      <p class="aviso-form">Te contactamos por WhatsApp en menos de 24 horas.</p>
+      <div class="exito" id="mensaje-exito">✅ ¡Recibido! Te escribimos muy pronto.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="contenedor footer-inner">
+    <div class="footer-marca">
+      <img src="logo.png" alt="">
+      <span>CHAL-IA</span>
+    </div>
+    <a href="mailto:hola@chal-ia.com">hola@chal-ia.com</a>
+    <p class="legal">© 2026 Chal-IA · Guadalajara, México · Tu WhatsApp contesta solo.</p>
+  </div>
+</footer>
+
+<a class="flotante" href="https://wa.me/523333370351?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20Chal-IA" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.1 3.2 5.1 4.49.71.3 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35z"/><path d="M12.05 2a9.9 9.9 0 0 0-8.57 14.87L2 22l5.27-1.38A9.9 9.9 0 1 0 12.05 2zm0 18.1a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 1 1 6.98 3.86z"/></svg>
+</a>
+
+<script>
+// Reveal on scroll
+const observador = new IntersectionObserver((entradas)=>{
+  entradas.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); observador.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.revela').forEach(el=>observador.observe(el));
+
+// Formulario -> FormSubmit (llega a hola@chal-ia.com)
+document.getElementById('form-contacto').addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  const f = ev.target;
+  if(!f.nombre.value.trim() || !f.negocio.value.trim() || !f.whatsapp.value.trim()){
+    alert('Por favor llena tu nombre, negocio y WhatsApp.');
+    return;
+  }
+  const boton = f.querySelector('.btn-enviar');
+  boton.disabled = true; boton.textContent = 'Enviando...';
+  try{
+    await fetch('https://formsubmit.co/ajax/0ae97cff274a2dabade0e638990155f9',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        _subject:'🔔 Nuevo lead desde chal-ia.com',
+        Nombre:f.nombre.value, Negocio:f.negocio.value,
+        WhatsApp:f.whatsapp.value, Giro:f.giro.value
+      })
+    });
+    document.getElementById('mensaje-exito').style.display='block';
+    f.reset();
+    boton.textContent='¡Enviado!';
+  }catch(err){
+    alert('Hubo un detalle al enviar. Mejor escríbenos directo por WhatsApp 🙏');
+    boton.disabled=false; boton.textContent='Quiero mi propuesta';
+  }
+});
+</script>
+</body>
+</html>
